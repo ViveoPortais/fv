@@ -1,0 +1,30 @@
+# Dependências do Node
+node_modules/
+
+# Build outputs
+.next/
+out/
+
+# Arquivos de configuração de log
+*.log
+
+# Arquivos temporários do sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos de ambiente
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Diretórios e arquivos específicos do editor
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.log
+*.tmp
