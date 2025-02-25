@@ -1,4 +1,5 @@
 import { Input } from "@/components/ui/input";
+import { formatPhoneNumber } from "@/helpers/helpers";
 import { CallDetails } from "@/types/incident";
 
 interface FormProps {
@@ -14,11 +15,7 @@ const CallView = ({ data }: FormProps) => {
         </div>
 
         <div className="flex flex-col">
-          <Input
-            value={data.doctorCRMUF}
-            placeholder="UF"
-            disabled={true}
-          />
+          <Input value={data.doctorCRMUF} placeholder="UF" disabled={true} />
         </div>
       </div>
 
@@ -32,7 +29,7 @@ const CallView = ({ data }: FormProps) => {
         </div>
 
         <div className="flex flex-col">
-          <Input value={data.contactPhoneNumber} placeholder="Celular" disabled={true} />
+          <Input value={formatPhoneNumber(data.contactPhoneNumber || "")} placeholder="Celular" disabled={true} />
         </div>
       </div>
 

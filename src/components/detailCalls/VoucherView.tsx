@@ -1,4 +1,5 @@
 import { Input } from "@/components/ui/input";
+import { formatPhoneNumber } from "@/helpers/helpers";
 import { CallDetails } from "@/types/incident";
 
 interface VoucherViewProps {
@@ -28,17 +29,17 @@ const VoucherView = ({ data }: VoucherViewProps) => {
         </div>
 
         <div className="flex flex-col">
-          <Input value={data.contactPhoneNumber} placeholder="Celular" disabled />
+          <Input value={formatPhoneNumber(data.contactPhoneNumber || "")} placeholder="Celular" disabled />
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex flex-col">
-          <Input value={data.clinicUF || ""} placeholder="UF" disabled />
+          <Input value={data.labCollectionState || ""} placeholder="UF" disabled />
         </div>
 
         <div className="flex flex-col">
-          <Input value={data.clinicCity || ""} placeholder="Cidade" disabled />
+          <Input value={data.labCollectionCity || ""} placeholder="Cidade" disabled />
         </div>
       </div>
 

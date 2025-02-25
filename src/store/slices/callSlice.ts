@@ -8,12 +8,16 @@ interface CallState {
   data: CallDetails | null;
   loading: boolean;
   selectedCallId: string | null;
+  code: string | null;
+  callStatusName: string | null;
 }
 
 const initialState: CallState = {
   data: null,
   loading: false,
   selectedCallId: null,
+  code: null,
+  callStatusName: null,
 };
 
 export const fetchCall = createAsyncThunk(
@@ -39,6 +43,18 @@ const callSlice = createSlice({
     clearSelectedCallId(state) {
       state.selectedCallId = null;
     },
+    setCode(state, action: PayloadAction<string>) {
+      state.code = action.payload;
+    },
+    clearCode(state) {
+      state.code = null;
+    },
+    setStatusName(state, action: PayloadAction<string>) {
+      state.callStatusName = action.payload;
+    },
+    clearStatusName(state) {
+      state.callStatusName = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -55,10 +71,13 @@ const callSlice = createSlice({
   },
 });
 
-export const { setSelectedCallId, clearSelectedCallId } = callSlice.actions;
+export const { setSelectedCallId, clearSelectedCallId, setCode, clearCode, setStatusName, clearStatusName } =
+  callSlice.actions;
 
 export const callDetails = (state: RootState) => state.call.data;
 export const selectedCallId = (state: RootState) => state.call.selectedCallId;
 export const loading = (state: RootState) => state.call.loading;
+export const code = (state: RootState) => state.call.code;
+export const callStatusName = (state: RootState) => state.call.callStatusName;
 
 export default callSlice.reducer;

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { getIncidentList, getMessagesCount, requestStatusIncident } from "@/services/incident";
+import { getIncidentAudit, getIncidentList, getMessagesCount, requestStatusIncident } from "@/services/incident";
 import { Filters, RequestStatusIncident } from "@/types/incident";
 import { RootState } from "../store";
 import { IStringMapData } from "@/types";
@@ -12,6 +12,7 @@ interface CallTrackingState {
   loading: boolean;
   error: string | null;
   messageCount: any;
+  incidentAudit: any;
 }
 
 const initialState: CallTrackingState = {
@@ -20,6 +21,7 @@ const initialState: CallTrackingState = {
   loading: false,
   error: null,
   messageCount: null,
+  incidentAudit: null,
 };
 
 export const fetchCalls = createAsyncThunk(
@@ -82,6 +84,17 @@ export const fetchGetMessagesCount = createAsyncThunk(
   }
 );
 
+export const fetchGetIncidentAudit = createAsyncThunk(
+  "callTracking/fetchGetIncidentAudit",
+  async ({ incidentId, programCode }: { incidentId: string; programCode: string }, { rejectWithValue }) => {
+    try {
+      return await getIncidentAudit(incidentId, programCode);
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data || "Erro ao buscar auditoria de chamado");
+    }
+  }
+)
+
 const callTrackingSlice = createSlice({
   name: "callTracking",
   initialState,
@@ -134,6 +147,18 @@ const callTrackingSlice = createSlice({
       .addCase(fetchGetMessagesCount.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+      })
+      .addCase(fetchGetIncidentAudit.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchGetIncidentAudit.fulfilled, (state, action: PayloadAction<any>) => {
+        state.incidentAudit = action.payload;
+        state.loading = false;
+      })
+      .addCase(fetchGetIncidentAudit.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
       });
   },
 });
@@ -142,5 +167,6 @@ export const selectCalls = (state: RootState) => state.callTracking.calls;
 export const selectLoading = (state: RootState) => state.callTracking.loading;
 export const selectStatusOptions = (state: RootState) => state.callTracking.statusOptions;
 export const selectMessageCount = (state: RootState) => state.callTracking.messageCount;
+export const selectIncidentAudit = (state: RootState) => state.callTracking.incidentAudit;
 
 export default callTrackingSlice.reducer;

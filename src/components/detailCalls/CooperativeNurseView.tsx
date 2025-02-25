@@ -1,4 +1,5 @@
 import { Input } from "@/components/ui/input";
+import { formatPhoneNumber } from "@/helpers/helpers";
 import { CallDetails } from "@/types/incident";
 
 interface CooperativeNurseViewProps {
@@ -28,7 +29,7 @@ const CooperativeNurseView = ({ data }: CooperativeNurseViewProps) => {
         </div>
 
         <div className="flex flex-col">
-          <Input value={data.healthProfessionalPhoneNumber || ""} placeholder="Telefone do(a) enfermeiro(a)" disabled={true} />
+          <Input value={formatPhoneNumber(data.healthProfessionalPhoneNumber || "")} placeholder="Telefone do(a) enfermeiro(a)" disabled={true} />
         </div>
 
         <div className="flex flex-col">

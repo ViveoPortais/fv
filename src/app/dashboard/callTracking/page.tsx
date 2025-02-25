@@ -17,6 +17,7 @@ import { DataTable } from "@/components/dashboard/DataTable";
 import { columns } from "./columns";
 import { getBackgroundColor, getTextColor } from "@/helpers/helpers";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { LoadingOverlay } from "@/components/custom/LoadingOverlay";
 
 export default function CallTracking() {
   const dispatch = useAppDispatch();
@@ -45,7 +46,7 @@ export default function CallTracking() {
 
   useEffect(() => {
     dispatch(fetchCalls({ filters, programCode }));
-  }, [dispatch]);
+  }, [dispatch, programCode]);
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilters((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -53,6 +54,7 @@ export default function CallTracking() {
 
   return (
     <div className="p-4 space-y-4">
+      <LoadingOverlay isVisible={isLoading} />
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Input name="code" placeholder="Código" value={filters.code} onChange={handleFilterChange} />
         <CustomSelect
@@ -64,7 +66,7 @@ export default function CallTracking() {
         <Input type="date" placeholder="De" name="startDate" value={filters.startDate} onChange={handleFilterChange} />
         <Input type="date" placeholder="Até" name="endDate" value={filters.endDate} onChange={handleFilterChange} />
       </div>
-      <Button disabled={isLoading} onClick={() => dispatch(fetchCalls({ filters, programCode }))}>
+      <Button disabled={isLoading} variant={"genericModalNo"} onClick={() => dispatch(fetchCalls({ filters, programCode }))}>
         Filtrar
       </Button>
       <DataTable columns={columns} data={calls} isLoading={isLoading} bgColor={bgColor} textColor={textColor} />

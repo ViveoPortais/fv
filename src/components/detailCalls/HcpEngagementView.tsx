@@ -1,5 +1,7 @@
 import { Input } from "@/components/ui/input";
+import { formatPhoneNumber } from "@/helpers/helpers";
 import { CallDetails } from "@/types/incident";
+import dayjs from "dayjs";
 
 interface HcpEngagementViewProps {
   data: CallDetails;
@@ -24,11 +26,11 @@ const HcpEngagementView = ({ data }: HcpEngagementViewProps) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex flex-col">
-          <Input value={data.contactName} placeholder="Nome do Contato" disabled={true} />
+          <Input value={data.healthProfessionalName || ""} placeholder="Nome do Contato" disabled={true} />
         </div>
 
         <div className="flex flex-col">
-          <Input value={data.contactPhoneNumber} placeholder="Celular" disabled={true} />
+          <Input value={formatPhoneNumber(data.healthProfessionalPhoneNumber || "")} placeholder="Celular" disabled={true} />
         </div>
       </div>
 
@@ -57,7 +59,7 @@ const HcpEngagementView = ({ data }: HcpEngagementViewProps) => {
 
         <div className="flex flex-col">
           <Input
-            value={data.healthProfessionalPhoneNumber || ""}
+            value={formatPhoneNumber(data.healthProfessionalPhoneNumber || "")}
             placeholder="Telefone do profissional delegado"
             disabled={true}
           />
@@ -66,11 +68,11 @@ const HcpEngagementView = ({ data }: HcpEngagementViewProps) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex flex-col">
-          <Input value={data.appointmentDate || ""} placeholder="Data do agendamento" type="date" disabled={true} />
+          <Input value={data.appointmentDate ? dayjs(data.appointmentDate).format("DD/MM/YYYY") : ""} placeholder="Data do agendamento" disabled={true} />
         </div>
 
         <div className="flex flex-col">
-          <Input value={data.availabilityStart || ""} placeholder="Horário do agendamento" disabled={true} />
+          <Input value={data.appointmentDate ? dayjs(data.appointmentDate).format("HH:mm") : ""} placeholder="Horário do agendamento" disabled={true} />
         </div>
       </div>
 

@@ -75,3 +75,13 @@ export const getDetails = async (incidentId: string, programCode: string) => {
   });
   return res.data;
 };
+
+export const getIncidentAudit = async (incidentId: string, programCode: string) => {
+  const res = await api.get("/Incident/getIncidentAudit", {
+    params: {
+      incidentId: incidentId,
+      programCode: programCode,
+    },
+  });
+  return res.data;
+};

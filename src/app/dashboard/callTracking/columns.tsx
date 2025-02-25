@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import useSession from "@/hooks/useSession";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setSelectedCallId } from "@/store/slices/callSlice";
+import { setCode, setSelectedCallId, setStatusName } from "@/store/slices/callSlice";
 import { fetchApproveDisapprove, selectLoading } from "@/store/slices/callTrackingSlice";
 import { RequestStatusIncident } from "@/types/incident";
 import { ColumnDef } from "@tanstack/react-table";
@@ -20,10 +20,11 @@ export type CallType = {
 };
 
 const ActionButtons = ({ row }: { row: any }) => {
-  const { id, statusStringMapName } = row.original;
+  const { id, statusStringMapName, code } = row.original;
   const dispatch = useAppDispatch();
   const loading = useAppSelector(selectLoading);
   const programCode = useSession().programCode;
+  const role = useSession().role;
   const router = useRouter();
 
   const handleApprove = () => {
@@ -46,6 +47,8 @@ const ActionButtons = ({ row }: { row: any }) => {
 
   const handleViewDetails = () => {
     dispatch(setSelectedCallId(id));
+    dispatch(setCode(code));
+    dispatch(setStatusName(statusStringMapName));
     router.push("/dashboard/callDetails");
   };
 
@@ -57,12 +60,22 @@ const ActionButtons = ({ row }: { row: any }) => {
             <Button size={"sm"} className="bg-blue-400" title="Visualizar" onClick={handleViewDetails}>
               <FaEye />
             </Button>
-            <Button size={"sm"} className="bg-green-400" title="Aprovar" onClick={handleApprove} disabled={loading}>
-              {loading ? <FaSpinner className="animate-spin text-white" aria-label="Carregando" /> : <FaCheck />}
-            </Button>
-            <Button size={"sm"} className="bg-red-400" title="Cancelar" onClick={handleDisapprove} disabled={loading}>
-              {loading ? <FaSpinner className="animate-spin text-white" aria-label="Carregando" /> : <FaTimes />}
-            </Button>
+            {role === "supervisor" && (
+              <>
+                <Button size={"sm"} className="bg-green-400" title="Aprovar" onClick={handleApprove} disabled={loading}>
+                  {loading ? <FaSpinner className="animate-spin text-white" aria-label="Carregando" /> : <FaCheck />}
+                </Button>
+                <Button
+                  size={"sm"}
+                  className="bg-red-400"
+                  title="Cancelar"
+                  onClick={handleDisapprove}
+                  disabled={loading}
+                >
+                  {loading ? <FaSpinner className="animate-spin text-white" aria-label="Carregando" /> : <FaTimes />}
+                </Button>
+              </>
+            )}
           </>
         );
       case "Pendente":
@@ -72,9 +85,11 @@ const ActionButtons = ({ row }: { row: any }) => {
             <Button size={"sm"} className="bg-blue-400" title="Visualizar" onClick={handleViewDetails}>
               <FaEye />
             </Button>
-            <Button size={"sm"} className="bg-red-400" title="Cancelar" onClick={handleDisapprove} disabled={loading}>
-              {loading ? <FaSpinner className="animate-spin text-white" aria-label="Carregando" /> : <FaTimes />}
-            </Button>
+            {role === "supervisor" && (
+              <Button size={"sm"} className="bg-red-400" title="Cancelar" onClick={handleDisapprove} disabled={loading}>
+                {loading ? <FaSpinner className="animate-spin text-white" aria-label="Carregando" /> : <FaTimes />}
+              </Button>
+            )}
           </>
         );
       case "Finalizado":

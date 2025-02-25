@@ -2,15 +2,14 @@
 
 import ContentCard from "@/components/ContentCard";
 import MessageIcon from "@/components/custom/MessageIcon";
-import { DocumentModal } from "@/components/doctor/starts/contentModal";
 import { getBackgroundColor } from "@/helpers/helpers";
 import { useModalContent } from "@/hooks/useModal";
 import useSession from "@/hooks/useSession";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchGetMessagesCount, selectLoading, selectMessageCount } from "@/store/slices/callTrackingSlice";
+import { fetchGetMessagesCount, selectMessageCount } from "@/store/slices/callTrackingSlice";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { FaFilePdf, FaFileVideo, FaRegChartBar, FaRegFileAlt } from "react-icons/fa";
+import React, { useEffect } from "react";
+import { FaRegChartBar } from "react-icons/fa";
 import { MdOutlineSupportAgent, MdQuestionAnswer } from "react-icons/md";
 
 const Page = () => {
@@ -44,14 +43,16 @@ const Page = () => {
           buttonText="Ver Mais"
           onButtonClick={() => router.push("/dashboard/callTracking")}
         />
-        <ContentCard
-          title="Relatório de chamados"
-          bgColor={bgColor}
-          hasIcon={true}
-          svgIcon={FaRegChartBar}
-          buttonText="Ver Mais"
-          onButtonClick={() => router.push("/dashboard/openingCalls")}
-        />
+        {auth.role === "supervisor" && (
+          <ContentCard
+            title="Relatório de chamados"
+            bgColor={bgColor}
+            hasIcon={true}
+            svgIcon={FaRegChartBar}
+            buttonText="Ver Mais"
+            onButtonClick={() => router.push("/dashboard/openingCalls")}
+          />
+        )}
         <ContentCard
           title="FAQ"
           bgColor={bgColor}

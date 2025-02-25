@@ -37,36 +37,51 @@ export const routes: Record<string, IRouteProps> = {
         {
           route: "/dashboard/openingCalls",
           text: "Abertura de chamados",
-          icon: LuClipboardList,
+          icon: MdOutlineSupportAgent,
         },
         {
           route: "/dashboard/callTracking",
           text: "Acompanhamento de chamados",
           icon: IoStopwatchOutline,
+        },
+        {
+          route: "/dashboard/incidentReport",
+          text: "Relatório de chamados",
+          icon: FaRegChartBar,
         },
       ],
       "984": [ //Programa de monitoramento
         {
           route: "/dashboard/openingCalls",
           text: "Abertura de chamados",
-          icon: LuClipboardList,
+          icon: MdOutlineSupportAgent,
         },
         {
           route: "/dashboard/callTracking",
           text: "Acompanhamento de chamados",
           icon: IoStopwatchOutline,
+        },
+        {
+          route: "/dashboard/incidentReport",
+          text: "Relatório de chamados",
+          icon: FaRegChartBar,
         },
       ],
       "987": [ //Programa de segurança
         {
           route: "/dashboard/openingCalls",
           text: "Abertura de chamados",
-          icon: LuClipboardList,
+          icon: MdOutlineSupportAgent,
         },
         {
           route: "/dashboard/callTracking",
           text: "Acompanhamento de chamados",
           icon: IoStopwatchOutline,
+        },
+        {
+          route: "/dashboard/incidentReport",
+          text: "Relatório de chamados",
+          icon: FaRegChartBar,
         },
       ]
     }
@@ -84,16 +99,11 @@ export const routes: Record<string, IRouteProps> = {
         {
           route: "/dashboard/openingCalls",
           text: "Abertura de chamados",
-          icon: LuClipboardList,
+          icon: MdOutlineSupportAgent,
         },
         {
           route: "/dashboard/callTracking",
           text: "Acompanhamento de chamados",
-          icon: LuClipboardList,
-        },
-        {
-          route: "/dashboard/diagnostic/exam",
-          text: "Relatório de chamados",
           icon: LuClipboardList,
         },
       ],
@@ -101,16 +111,11 @@ export const routes: Record<string, IRouteProps> = {
         {
           route: "/dashboard/openingCalls",
           text: "Abertura de chamados",
-          icon: LuClipboardList,
+          icon: MdOutlineSupportAgent,
         },
         {
           route: "/dashboard/callTracking",
           text: "Acompanhamento de chamados",
-          icon: LuClipboardList,
-        },
-        {
-          route: "/dashboard/diagnostic/exam",
-          text: "Relatório de chamados",
           icon: LuClipboardList,
         },
       ],
@@ -118,16 +123,11 @@ export const routes: Record<string, IRouteProps> = {
         {
           route: "/dashboard/openingCalls",
           text: "Abertura de chamados",
-          icon: LuClipboardList,
+          icon: MdOutlineSupportAgent,
         },
         {
           route: "/dashboard/callTracking",
           text: "Acompanhamento de chamados",
-          icon: LuClipboardList,
-        },
-        {
-          route: "/dashboard/diagnostic/exam",
-          text: "Relatório de chamados",
           icon: LuClipboardList,
         },
       ]
@@ -153,11 +153,6 @@ export const routes: Record<string, IRouteProps> = {
           text: "Acompanhamento de chamados",
           icon: FaRegFileAlt,
         },
-        {
-          route: "/dashboard/diagnostic/exam",
-          text: "Relatório de chamados",
-          icon: FaRegChartBar,
-        },
       ],
       "984": [ //Programa de monitoramento
         {
@@ -170,11 +165,6 @@ export const routes: Record<string, IRouteProps> = {
           text: "Acompanhamento de chamados",
           icon: FaRegFileAlt,
         },
-        {
-          route: "/dashboard/diagnostic/exam",
-          text: "Relatório de chamados",
-          icon: FaRegChartBar,
-        },
       ],
       "987": [ //Programa de segurança
         {
@@ -186,11 +176,6 @@ export const routes: Record<string, IRouteProps> = {
           route: "/dashboard/callTracking",
           text: "Acompanhamento de chamados",
           icon: FaRegFileAlt,
-        },
-        {
-          route: "/dashboard/diagnostic/exam",
-          text: "Relatório de chamados",
-          icon: FaRegChartBar,
         },
       ]
     }

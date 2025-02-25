@@ -23,27 +23,39 @@ import { z } from "zod";
 interface FormProps {
   optionId: string;
   bgColor?: string;
+  setSelectedOption: any;
 }
 
 const schema = z.object({
-  licenseNumber: z.string().min(1, { message: "Insira um CRM válido" }).regex(/^\d+$/, { message: "Apenas números são permitidos" }),
+  licenseNumber: z
+    .string()
+    .min(1, { message: "Insira um CRM válido" })
+    .regex(/^\d+$/, { message: "Apenas números são permitidos" }),
   licenseState: z.string().min(1, { message: "Insira um UF válido" }).trim(),
-  doctorName: z.string()
-    .min(1, { message: "Insira nome do médico" }),
-  contactName: z.string()
+  doctorName: z.string().min(1, { message: "Insira nome do médico" }),
+  contactName: z
+    .string()
     .min(1, { message: "Insira nome para contato" })
     .regex(nameRegex, { message: "Nome inválido" }),
-  mobilePhone: z.string()
-    .min(1, { message: "Informe o número" }),
+  mobilePhone: z.string().min(1, { message: "Informe o número" }),
   description: z.string().min(1, { message: "Este campo não pode estar vazio" }),
   ufVoucher: z.string().min(1, { message: "Selecione um estado" }),
-  city: z.string().min(1, { message: "Selecione uma cidade" })
+  city: z.string().min(1, { message: "Selecione uma cidade" }),
 });
 
 type SchemaProps = z.infer<typeof schema>;
 
-const VoucherForm = ({ optionId, bgColor }: FormProps) => {
-  const { register, handleSubmit, getValues, watch, setValue, control, formState: { errors, isValid }, reset } = useForm<SchemaProps>({
+const VoucherForm = ({ optionId, bgColor, setSelectedOption }: FormProps) => {
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    watch,
+    setValue,
+    control,
+    formState: { errors, isValid },
+    reset,
+  } = useForm<SchemaProps>({
     resolver: zodResolver(schema),
     mode: "onChange",
   });
@@ -83,23 +95,23 @@ const VoucherForm = ({ optionId, bgColor }: FormProps) => {
   };
 
   const handleModalSuccess = (nroChamado: string) => {
-    modal.text = `Sua solicitação foi aberta com sucesso. O número desta solicitação é ${nroChamado}. Clique no "Sim" para acompanhar o status de suas solicitações.`
-    modal.handleYes = handleYes
-    modal.handleNo = handleNo
+    modal.text = `Sua solicitação foi aberta com sucesso.<br /> O número desta solicitação é ${nroChamado}.<br /> Clique no "Sim" para acompanhar o status de suas solicitações.`;
+    modal.handleYes = handleYes;
+    modal.handleNo = handleNo;
     modal.openModal(true);
-  }
+  };
 
   const handleYes = () => {
     clearForm();
     modal.openModal(false);
-    router.push("/dashboard/starts");
-  }
+    router.push("/dashboard/callTracking");
+  };
 
   const handleNo = () => {
     clearForm();
     modal.openModal(false);
     router.push("/dashboard/starts");
-  }
+  };
 
   const clearForm = () => {
     reset();
@@ -109,9 +121,9 @@ const VoucherForm = ({ optionId, bgColor }: FormProps) => {
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>, field: any) => {
-    let value = e.target.value.replace(/\D/g, "");
-
-    if (isValidPhoneNumber(value)) {
+    let value = e.target.value;
+    const cleanPhone = value.replace(/\D/g, "");
+    if (isValidPhoneNumber(cleanPhone)) {
       field.onChange(value);
       setCellphoneError(null);
     } else {
@@ -165,6 +177,11 @@ const VoucherForm = ({ optionId, bgColor }: FormProps) => {
     }
   }, [uf]);
 
+  const handleBackClick = () => {
+    clearForm();
+    setSelectedOption(null);
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-4 p-4">
       <LoadingOverlay isVisible={loading} />
@@ -209,17 +226,17 @@ const VoucherForm = ({ optionId, bgColor }: FormProps) => {
           <Controller
             name="mobilePhone"
             control={control}
-            render={({ field }) => (
+            render={({ field }) =>
               maskedField(
                 "cellphone",
                 (e) => handlePhoneChange(e, field),
                 field.name,
-                "Celular",
+                "Telefone do contato",
                 false,
-                () => { },
+                () => {},
                 field.value
               )
-            )}
+            }
           />
           {cellphoneError && <span className="text-red-500 text-sm">{cellphoneError}</span>}
           {errors.mobilePhone && <span className="text-red-500 text-sm">{errors.mobilePhone.message}</span>}
@@ -252,12 +269,7 @@ const VoucherForm = ({ optionId, bgColor }: FormProps) => {
             name="city"
             control={control}
             render={({ field }) => (
-              <CustomFilterSelect
-                label="Cidade"
-                options={cities}
-                {...field}
-                customClass="w-full"
-              />
+              <CustomFilterSelect label="Cidade" options={cities} {...field} customClass="w-full" />
             )}
           />
           {errors.city && <span className="text-red-500 text-sm">{errors.city.message}</span>}
@@ -276,20 +288,25 @@ const VoucherForm = ({ optionId, bgColor }: FormProps) => {
         {errors.description && <span className="text-red-500 text-sm">{errors.description.message}</span>}
       </div>
 
-      <Button
-        type="submit"
-        className={`w-full ${bgColor} text-white py-2 rounded-lg hover:bg-gray-500`}
-        disabled={
-          !isValid
-        }>
-        Enviar
-      </Button>
+      <div className="flex justify-between">
+        <>
+          <Button size={"lg"} variant={"genericModalNo"} onClick={handleBackClick}>
+            Voltar
+          </Button>
+          <Button
+            type="submit"
+            size={"lg"}
+            className={`${bgColor} text-white py-2 rounded-lg hover:bg-gray-500`}
+            disabled={!isValid}
+          >
+            Enviar
+          </Button>
+        </>
+      </div>
 
-      <GenericModal
-        bgColor={bgColor ? bgColor : ""}
-      />
+      <GenericModal bgColor={bgColor ? bgColor : ""} />
     </form>
   );
-}
+};
 
 export default VoucherForm;

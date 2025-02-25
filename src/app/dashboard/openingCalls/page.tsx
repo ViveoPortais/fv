@@ -22,6 +22,7 @@ interface IOption {
 interface FormProps {
   optionId: string;
   bgColor?: string;
+  setSelectedOption: any;
 }
 
 const OpeningCalls = () => {
@@ -34,10 +35,10 @@ const OpeningCalls = () => {
     // Mapeamento das opções para os componentes de formulário correspondentes
     "enfermeiro(a) cooperado(a)": CooperativeNurseForm,
     "acesso ao laudo": CallForm,
-    "outros": CallForm,
+    outros: CallForm,
     "acesso ao site do programa / 0800": CallForm,
-    "consultoria": ConsultancyForm,
-    "kit": CallForm,
+    consultoria: ConsultancyForm,
+    kit: CallForm,
     "facilitação engajamento hcp": HcpEngagementForm,
     "envio de amostra": CallForm,
     "voucher para coleta em laboratório": VoucherForm,
@@ -50,14 +51,16 @@ const OpeningCalls = () => {
         const data: IStringMapData = {
           entityName: "Incident",
           attributeName: "ContactTypeStringMap",
-          programCode: auth.programCode
+          programCode: auth.programCode,
         };
         const response = await getOptionsOpeningCalls(data);
 
-        const formattedOptions: IOption[] = response.map((item: any) => ({
-          id: item.stringMapId,
-          value: item.optionName
-        }));
+        const formattedOptions: IOption[] = response
+          .map((item: any) => ({
+            id: item.stringMapId,
+            value: item.optionName,
+          }))
+          .sort((a: any, b: any) => a.value.localeCompare(b.value));
 
         setOptions(formattedOptions);
       } catch (error) {
@@ -83,6 +86,29 @@ const OpeningCalls = () => {
   const bgColor = getBackgroundColor(auth.programCode);
   const textColor = getTextColor(auth.programCode);
 
+  const getToolTip = (optionName: string) => {
+    switch (optionName) {
+      case "Enfermeiro(a) cooperado(a)":
+        return "Pendência na contratação, relatório de trabalho/pagamento, ausência na coleta, indicação de profissional";
+      case "Acesso ao laudo":
+        return "Questionamentos relacionados a acesso e disponibilidade de laudos";
+      case "Acesso ao site do programa / 0800":
+        return "Dificuldade de acesso ao site, cadastro, vínculo ao profissional de saúde, recuperação de senha, não consegue falar no 0800";
+      case "Facilitação Engajamento HCP":
+        return "Orientações gerais relacionadas ao programa, cadastro médico, vínculo ao profissional de saúde – gestão de equipe, orientações para solicitação de coleta – Screening, admissão, coleta avulsa, leucócitos etc";
+      case "Envio de amostra":
+        return "Dificuldade/pendência na retirada, no código de postagem ou no envio de exames de segurança para laboratório global";
+      case "Voucher para coleta em laboratório":
+        return "Sugestão/dúvidas de cidades, pendências de solicitação de voucher";
+      case "Consultoria":
+        return "Solicitação/pendência de consultoria para discussão de casos/dúvidas técnicas/esclarecimento de laudos";
+      case "Kit":
+        return "Kit emergencial, demora na entrega de kits, não identificação da entrega, itens faltantes";
+      case "Outros":
+        return "Destinado a casos não contemplados nas opções anteriores";
+    }
+  };
+
   return (
     <div className="h-full w-full">
       <LoadingOverlay isVisible={loading} />
@@ -97,6 +123,7 @@ const OpeningCalls = () => {
                   size="lg"
                   className={`w-full ${bgColor}`}
                   onClick={() => handleButtonClick(option)}
+                  title={getToolTip(option.value)}
                 >
                   {option.value}
                 </Button>
@@ -116,8 +143,7 @@ const OpeningCalls = () => {
                 <h1 className={`text-lg font-bold ${textColor}`}>/{selectedOption.value}</h1>
               </div>
             </div>
-
-            {FormComponent && <FormComponent optionId={selectedOption.id} bgColor={bgColor} />}
+            {FormComponent && <FormComponent optionId={selectedOption.id} bgColor={bgColor} setSelectedOption={setSelectedOption} />}
           </>
         )}
       </div>

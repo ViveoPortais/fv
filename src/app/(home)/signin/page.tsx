@@ -21,20 +21,23 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { IResendToken } from "@/types";
 
-const signInValidationSchema = z.object({
-  login: z.string().min(1, { message: "Informe o login" }),
-  password: z
-    .string()
-    .min(3, { message: "A senha deve conter pelo menos 3 caracteres" }),
-  tokenByEmail: z.boolean().optional(),
-  tokenBySms: z.boolean().optional(),
-  token: z.string().optional()
-}).refine(data => {
-  return data.tokenByEmail || data.tokenBySms
-}, {
-  message: "Pelo menos uma forma de envio de token deve ser selecionada",
-  path: ['tokenBySms'],
-});
+const signInValidationSchema = z
+  .object({
+    login: z.string().min(1, { message: "Informe o login" }),
+    password: z.string().min(3, { message: "A senha deve conter pelo menos 3 caracteres" }),
+    tokenByEmail: z.boolean().optional(),
+    tokenBySms: z.boolean().optional(),
+    token: z.string().optional(),
+  })
+  .refine(
+    (data) => {
+      return data.tokenByEmail || data.tokenBySms;
+    },
+    {
+      message: "Pelo menos uma forma de envio de token deve ser selecionada",
+      path: ["tokenBySms"],
+    }
+  );
 
 type SignInValidationProps = z.infer<typeof signInValidationSchema>;
 
@@ -53,13 +56,13 @@ export default function SignIn() {
   } = useForm<SignInValidationProps>({
     resolver: zodResolver(signInValidationSchema),
     defaultValues: {
-      login: '',
-      password: '',
+      login: "",
+      password: "",
       tokenByEmail: false,
       tokenBySms: false,
-      token: ''
+      token: "",
     },
-    mode: "onChange"
+    mode: "onChange",
   });
 
   const stateTokenByEmail = watch("tokenByEmail");
@@ -88,7 +91,7 @@ export default function SignIn() {
 
     try {
       const response = await login(data);
-      if (response.role === '') {
+      if (response.role === "") {
         setIsTokenSended(true);
         toast.success(response.token);
       } else {
@@ -126,7 +129,7 @@ export default function SignIn() {
       setValue("tokenByEmail", false);
       setValue("tokenBySms", value);
     }
-  }
+  };
 
   const handleResendToken = (data: SignInValidationProps) => {
     setIsLoading(true);
@@ -139,23 +142,19 @@ export default function SignIn() {
 
     resendToken(dataSend)
       .then((res) => {
-        if (res.isValidData)
-          toast.success(res.additionalMessage);
+        if (res.isValidData) toast.success(res.additionalMessage);
       })
       .catch((res) => {
         toast.error(res.additionalMessage);
       })
       .finally(() => {
         setIsLoading(false);
-      })
-  }
+      });
+  };
 
   return (
     <div className="flex flex-col gap-4 w-full items-center">
-      <form
-        className="flex flex-col items-center gap-3 w-full h-full"
-        onSubmit={handleSubmit(handleLogin)}
-      >
+      <form className="flex flex-col items-center gap-3 w-full h-full" onSubmit={handleSubmit(handleLogin)}>
         <div className="w-full">
           <Input
             type="text"
@@ -165,11 +164,7 @@ export default function SignIn() {
             {...register("login", { required: true })}
             maxLength={100}
           />
-          {errors.login && (
-            <span className="w-full text-xs text-red-400 mt-1">
-              {errors.login.message}
-            </span>
-          )}
+          {errors.login && <span className="w-full text-xs text-red-400 mt-1">{errors.login.message}</span>}
         </div>
 
         <div className="w-full">
@@ -180,17 +175,11 @@ export default function SignIn() {
             className="w-full"
             {...register("password", { required: true })}
           />
-          {errors.password && (
-            <span className="w-full text-xs text-red-400 mt-1">
-              {errors.password.message}
-            </span>
-          )}
+          {errors.password && <span className="w-full text-xs text-red-400 mt-1">{errors.password.message}</span>}
         </div>
 
         <div className="w-full">
-          <span className="w-full text-sm text-zinc-500">
-            Selecione como deseja receber seu token de acesso
-          </span>
+          <span className="w-full text-sm text-zinc-500">Selecione como deseja receber seu token de acesso</span>
         </div>
 
         <div className="w-full">
@@ -200,14 +189,10 @@ export default function SignIn() {
               checked={stateTokenByEmail}
               onCheckedChange={(checked) => handleCheckboxChange("tokenByEmail", !!checked)}
             />
-            <span className="uppercase text-[11px]">
-              Enviar por E-mail
-            </span>
+            <span className="uppercase text-[11px]">Enviar por E-mail</span>
           </div>
           {errors.tokenByEmail && (
-            <span className="ml-2 w-full text-xs text-red-400 mt-1">
-              {errors.tokenByEmail.message}
-            </span>
+            <span className="ml-2 w-full text-xs text-red-400 mt-1">{errors.tokenByEmail.message}</span>
           )}
         </div>
 
@@ -218,37 +203,21 @@ export default function SignIn() {
               checked={stateTokenBySms}
               onCheckedChange={(checked) => handleCheckboxChange("tokenBySms", !!checked)}
             />
-            <span className="uppercase text-[11px]">
-              Enviar por Sms
-            </span>
+            <span className="uppercase text-[11px]">Enviar por Sms</span>
           </div>
           {errors.tokenBySms && (
-            <span className="ml-2 w-full text-xs text-red-400 mt-1">
-              {errors.tokenBySms.message}
-            </span>
+            <span className="ml-2 w-full text-xs text-red-400 mt-1">{errors.tokenBySms.message}</span>
           )}
         </div>
 
         {isTokenSended && (
           <div className="w-full">
-            <Input
-              type="text"
-              placeholder="Token"
-              className="w-full"
-              {...register("token")}
-            />
-            {errors.token && (
-              <span className="w-full text-xs text-red-400 mt-1">
-                {errors.token.message}
-              </span>
-            )}
+            <Input type="text" placeholder="Token" className="w-full" {...register("token")} />
+            {errors.token && <span className="w-full text-xs text-red-400 mt-1">{errors.token.message}</span>}
           </div>
         )}
 
-        <span
-          className="text-xs self-end underline cursor-pointer"
-          onClick={handleForgetPassword}
-        >
+        <span className="text-xs self-end underline cursor-pointer" onClick={handleForgetPassword}>
           Esqueci minha senha
         </span>
 
@@ -256,13 +225,9 @@ export default function SignIn() {
           size={`lg`}
           className={`w-full mt-4 ${isLoading && "bg-zinc-500"}`}
           type="submit"
-          disabled={isLoading || isTokenSended && tokenValue == ""}
+          disabled={isLoading || (isTokenSended && tokenValue == "")}
         >
-          {isLoading ? (
-            <CgSpinner size={20} className="text-white animate-spin" />
-          ) : (
-            "Entrar"
-          )}
+          {isLoading ? <CgSpinner size={20} className="text-white animate-spin" /> : "Entrar"}
         </Button>
         {isTokenSended && (
           <Button
@@ -272,32 +237,10 @@ export default function SignIn() {
             disabled={isLoading}
             onClick={() => handleResendToken(watch())}
           >
-            {isLoading ? (
-              <CgSpinner size={20} className="text-white animate-spin" />
-            ) : (
-              "Reenviar token"
-            )}
+            {isLoading ? <CgSpinner size={20} className="text-white animate-spin" /> : "Reenviar token"}
           </Button>
         )}
       </form>
-
-      <Link
-        href="/signup/doctor"
-        className="w-full"
-      >
-        <Button
-          size={`lg`}
-          className={`w-full ${isLoading && "bg-zinc-500"}`}
-          type="button"
-          disabled={isLoading}
-        >
-          {isLoading ? (
-            <CgSpinner size={20} className="text-white animate-spin" />
-          ) : (
-            "Cadastre-se"
-          )}
-        </Button>
-      </Link>
     </div>
   );
 }
