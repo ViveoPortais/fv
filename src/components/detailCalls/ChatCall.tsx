@@ -115,7 +115,7 @@ const ChatCall: React.FC<ChatCallProps> = ({ incidentId, programCode }) => {
         />
         <Button
           onClick={handleSendMessage}
-          disabled={loading}
+          disabled={loading || message.trim() === ""}
           variant={"genericModalNo"}
           className="flex items-center space-x-2"
         >
