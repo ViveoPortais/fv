@@ -51,7 +51,7 @@ export function Header() {
   const handleRegister = async (data: IRegisterRepresentative) => {
     const newData = {
       ...data,
-      programCode: auth.programCode,
+      programCode: "983",
       profile: "Representante FV",
     };
     await dispatch(addRepresentative(newData));
