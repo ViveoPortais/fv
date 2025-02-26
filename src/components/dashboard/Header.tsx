@@ -166,16 +166,18 @@ export function Header() {
             <LuCheckCircle size={24} />
             Selecionar Programa
           </Link>
-          <button
-            onClick={() => {
-              setIsModalOpen(true);
-              changeMenu(false);
-            }}
-            className="flex gap-x-2 cursor-pointer hover:bg-zinc-100 rounded-lg p-4 text-left"
-          >
-            <GoPersonAdd size={24} />
-            Cadastrar
-          </button>
+          {role !== "representative" && (
+            <button
+              onClick={() => {
+                setIsModalOpen(true);
+                changeMenu(false);
+              }}
+              className="flex gap-x-2 cursor-pointer hover:bg-zinc-100 rounded-lg p-4 text-left"
+            >
+              <GoPersonAdd size={24} />
+              Cadastrar
+            </button>
+          )}
           <Link
             href={`/`}
             className={`flex gap-x-2 cursor-pointer hover:bg-zinc-100 rounded-lg p-4 `}
@@ -271,16 +273,6 @@ export function Header() {
                     <LuCheckCircle size={24} />
                     Selecionar Programa
                   </Link>
-                  <button
-                    onClick={() => {
-                      setIsModalOpen(true);
-                      changeMenu(false);
-                    }}
-                    className="flex gap-x-2 cursor-pointer hover:bg-zinc-100 rounded-lg p-4 text-left"
-                  >
-                    <GoPersonAdd size={24} />
-                    Cadastrar
-                  </button>
                   <Link
                     href={`/`}
                     className={` text-lg flex gap-x-2 cursor-pointer hover:bg-zinc-100 rounded-lg p-4 `}
