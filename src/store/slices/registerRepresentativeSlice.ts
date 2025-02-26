@@ -11,12 +11,12 @@ export const addRepresentative = createAsyncThunk(
       if (response.isValidData) {
         toast.success(response.additionalMessage);
       } else {
-        toast.error(response.additionalMessage || "Erro ao enviar mensagem");
+        toast.error(response.additionalMessage || "Erro ao realizar cadastro");
       }
       return response;
     } catch (error) {
-      toast.error("Erro ao enviar mensagem");
-      return rejectWithValue("Erro ao enviar mensagem");
+      toast.error("Erro ao realizar cadastro");
+      return rejectWithValue("Erro ao realizar cadastro");
     }
   }
 );

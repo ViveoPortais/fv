@@ -40,7 +40,7 @@ const ConsultancyView = ({ data }: FormProps) => {
         <div className="flex flex-col">
           <Input
             placeholder="De"
-            value={data.availabilityStart ? dayjs(data.availabilityStart).format("HH:mm:ss") : ""}
+            value={data.availabilityStart ? dayjs(data.availabilityStart).format("HH:mm") : ""}
             disabled={true}
           />
         </div>
@@ -48,7 +48,7 @@ const ConsultancyView = ({ data }: FormProps) => {
         <div className="flex flex-col">
           <Input
             placeholder="Até"
-            value={data.availabilityEnd ? dayjs(data.availabilityEnd).format("HH:mm:ss") : ""}
+            value={data.availabilityEnd ? dayjs(data.availabilityEnd).format("HH:mm") : ""}
             disabled={true}
           />
         </div>
@@ -64,7 +64,7 @@ const ConsultancyView = ({ data }: FormProps) => {
         <div className="flex flex-col">
           <Input
             placeholder="De"
-            value={data.availabilityStart2 ? dayjs(data.availabilityStart2).format("HH:mm:ss") : ""}
+            value={data.availabilityStart2 ? dayjs(data.availabilityStart2).format("HH:mm") : ""}
             disabled={true}
           />
         </div>
@@ -72,7 +72,7 @@ const ConsultancyView = ({ data }: FormProps) => {
         <div className="flex flex-col">
           <Input
             placeholder="Até"
-            value={data.availabilityEnd2 ? dayjs(data.availabilityEnd2).format("HH:mm:ss") : ""}
+            value={data.availabilityEnd2 ? dayjs(data.availabilityEnd2).format("HH:mm") : ""}
             disabled={true}
           />
         </div>
@@ -88,7 +88,7 @@ const ConsultancyView = ({ data }: FormProps) => {
         <div className="flex flex-col">
           <Input
             placeholder="De"
-            value={data.availabilityStart3 ? dayjs(data.availabilityStart3).format("HH:mm:ss") : ""}
+            value={data.availabilityStart3 ? dayjs(data.availabilityStart3).format("HH:mm") : ""}
             disabled={true}
           />
         </div>
@@ -96,7 +96,7 @@ const ConsultancyView = ({ data }: FormProps) => {
         <div className="flex flex-col">
           <Input
             placeholder="Até"
-            value={data.availabilityEnd3 ? dayjs(data.availabilityEnd3).format("HH:mm:ss") : ""}
+            value={data.availabilityEnd3 ? dayjs(data.availabilityEnd3).format("HH:mm") : ""}
             disabled={true}
           />
         </div>
