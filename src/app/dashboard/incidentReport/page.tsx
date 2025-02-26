@@ -1,5 +1,10 @@
 "use client"; 
-import PowerBIDashboard from "@/components/dashboard/PowerBIDashboard";
+import dynamic from "next/dynamic";
+
+const PowerBIDashboard = dynamic(() => import("@/components/dashboard/PowerBIDashboard"), {
+  ssr: false,
+});
+
 
 export default function IncidentReport() {
     

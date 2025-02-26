@@ -50,7 +50,7 @@ const Page = () => {
             hasIcon={true}
             svgIcon={FaRegChartBar}
             buttonText="Ver Mais"
-            onButtonClick={() => router.push("/dashboard/openingCalls")}
+            onButtonClick={() => router.push("/dashboard/incidentReport")}
           />
         )}
         <ContentCard

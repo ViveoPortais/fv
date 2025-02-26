@@ -59,7 +59,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
   buttons.push({ label: "Histórico", onClick: handleHistory }, { label: "Voltar", onClick: handleBack });
 
   return (
-    <div className="p-4 flex space-x-4">
+    <div className="p-4 flex flex-wrap justify-center md:justify-start gap-2">
       {buttons.map(({ label, statusCode, onClick }) => (
         <Button
           key={label}
@@ -74,6 +74,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
           }}
           variant="genericModalNo"
           disabled={loading === label}
+          className="w-full md:w-auto"
         >
           {loading === label ? <FaSpinner className="animate-spin text-white" aria-label="Carregando" /> : label}
         </Button>
