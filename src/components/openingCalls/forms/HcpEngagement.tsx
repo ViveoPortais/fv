@@ -118,7 +118,7 @@ const HcpEngagementForm = ({ optionId, bgColor, setSelectedOption }: FormProps) 
   };
 
   const handleModalSuccess = (nroChamado: string) => {
-    modal.text = `Sua solicitação foi aberta com sucesso.<br /> O número desta solicitação é ${nroChamado}.<br /> Clique no "Sim" para acompanhar o status de suas solicitações.`;
+    modal.text = `Sua solicitação foi aberta com sucesso.\nO número desta solicitação é ${nroChamado}.\nClique no "Sim" para acompanhar o status de suas solicitações.`;
     modal.handleYes = handleYes;
     modal.handleNo = handleNo;
     modal.openModal(true);
@@ -386,7 +386,7 @@ const HcpEngagementForm = ({ optionId, bgColor, setSelectedOption }: FormProps) 
             type="submit"
             size={"lg"}
             className={`${bgColor} text-white py-2 rounded-lg hover:bg-gray-500`}
-            disabled={!isValid}
+            disabled={!isValid || cellphoneError !== null}
           >
             Enviar
           </Button>

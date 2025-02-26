@@ -170,7 +170,7 @@ export function Header() {
             <button
               onClick={() => {
                 setIsModalOpen(true);
-                changeMenu(false);
+                // changeMenu(false);
               }}
               className="flex gap-x-2 cursor-pointer hover:bg-zinc-100 rounded-lg p-4 text-left"
             >
@@ -187,6 +187,11 @@ export function Header() {
             Logout
           </Link>
         </ul>
+        <RegisterRepresentativeModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onSubmit={handleRegister}
+        />
       </nav>
 
       <header

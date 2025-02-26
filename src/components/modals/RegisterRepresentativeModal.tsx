@@ -5,7 +5,7 @@ import { z } from "zod";
 import { maskedField } from "../custom/MaskedField";
 import { isValidPhoneNumber } from "@/helpers/helpers";
 import { useAppSelector } from "@/store/hooks";
-import { FaSpinner } from "react-icons/fa";
+import { FaSpinner, FaTimes } from "react-icons/fa"; // Ícone de fechar
 import { Button } from "../ui/button";
 
 const schema = z.object({
@@ -54,18 +54,25 @@ const RegisterRepresentativeModal: React.FC<RegisterRepresentativeModalProps> = 
     }
   };
 
-  const handleCloseModal = () => {
-    reset();
-    setCellphoneError(null);
-    onClose();
+  const handleCloseModal = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
-        <h2 className="text-xl font-bold mb-4">Cadastro de Representante</h2>
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+      onClick={handleCloseModal}
+    >
+      <div className="bg-white w-11/12 max-w-md sm:w-[60%] md:w-[40%] p-4 sm:p-6 rounded-lg shadow-lg relative overflow-auto">
+        <button className="absolute top-4 right-4 text-gray-600 hover:text-gray-800" onClick={onClose}>
+          <FaTimes size={20} />
+        </button>
+
+        <h2 className="text-xl text-center font-semibold mb-4">Cadastro de Representante</h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="flex flex-col">
@@ -120,20 +127,11 @@ const RegisterRepresentativeModal: React.FC<RegisterRepresentativeModalProps> = 
             {errors.telephone && <span className="text-red-500 text-sm">{errors.telephone.message}</span>}
           </div>
 
-          <div className="mt-6 flex justify-end space-x-4">
-            <Button
-              type="button"
-              onClick={handleCloseModal}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              disabled={loading}
-            >
+          <div className="flex flex-col sm:flex-row gap-4 mt-4">
+            <Button type="button" onClick={onClose} className="w-full sm:w-[48%]" disabled={loading}>
               {loading ? <FaSpinner className="animate-spin text-white" aria-label="Carregando" /> : "Voltar"}
             </Button>
-            <Button
-              type="submit"
-              className="px-4 py-2 text-sm font-medium text-white bg-gray-400 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              disabled={loading || !isValid}
-            >
+            <Button type="submit" className="w-full sm:w-[48%]" disabled={loading || !isValid}>
               {loading ? <FaSpinner className="animate-spin text-white" aria-label="Carregando" /> : "Cadastrar"}
             </Button>
           </div>

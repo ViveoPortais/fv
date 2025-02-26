@@ -30,15 +30,17 @@ const GenericModal = ({
     }
   };
 
-  const formatTextWithLineBreaks = (text: string) => {
-    return text.split(".").map((sentence, index) => (
-      <React.Fragment key={index}>
-        {sentence.trim()}
-        {sentence.trim() && '.'}
-        {index < text.split(".").length - 1 && <br />}
-      </React.Fragment>
-    ));
-  };
+  // const formatTextWithLineBreaks = (text: string) => {
+  //   return text
+  //     .split(".")
+  //     .filter((sentence) => sentence.trim() !== "")
+  //     .map((sentence, index, array) => (
+  //       <React.Fragment key={index}>
+  //         {sentence.trim()}
+  //         {index < array.length - 1 && <br />}
+  //       </React.Fragment>
+  //     ));
+  // };
 
   return (
     <>
@@ -56,7 +58,7 @@ const GenericModal = ({
             </button>
 
             <div className="flex flex-col text-center">
-              <h2 className="text-xl font-semibold mb-4">{formatTextWithLineBreaks(modal.text!)}</h2>
+              <h2 className="text-xl font-semibold mb-4 whitespace-pre-line">{modal.text}</h2>
 
               <div className="flex justify-center gap-4 mt-4">
                 {modal.showOkButton ? (
