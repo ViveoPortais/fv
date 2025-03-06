@@ -61,7 +61,7 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
           <ScrollArea className="bg-white flex flex-col items-center justify-center p-4 md:p-8 mx-4 max-h-screen overflow-hidden">
             <div className="w-full flex items-center justify-between">
               <Image src="/images/logo-rare.png" width={160} height={100} alt="logoRare" className="mb-3 mr-5" />
-              <a href="https://www.sanoficonecta.com.br/" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.sanoficonecta.com.br/campanha/programa-rare" target="_blank" rel="noopener noreferrer">
                 <Image src="/images/logo-conecta.png" width={160} height={80} alt="logoConecta" className="mb-3" />
               </a>
             </div>
