@@ -11,6 +11,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Ebook } from "@/components/Ebook";
 import { Documents } from "@/components/Documents";
 import { usePageHeight } from "@/hooks/usePageHeight";
+import { Footer } from "@/components/Footer";
 
 interface HomeLayoutProps {
   children: ReactNode;
@@ -57,30 +58,18 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
         <div className="hidden xl:flex items-center justify-center text-white p-12" />
 
         <div className="flex items-center justify-center xl:col-span-2 xl:justify-end">
-          <ScrollArea className="flex flex-col items-center justify-center p-4 md:p-8 mx-4 max-h-[90vh] md:max-h-[85vh]">
+          <ScrollArea className="bg-white flex flex-col items-center justify-center p-4 md:p-8 mx-4 max-h-screen overflow-hidden">
             <div className="w-full flex items-center justify-between">
-              <Image
-                src="/images/logo-rare.png"
-                width={160}
-                height={100}
-                alt="logoRare"
-                className="mb-3 mr-5"
-              />
+              <Image src="/images/logo-rare.png" width={160} height={100} alt="logoRare" className="mb-3 mr-5" />
               <a href="https://www.sanoficonecta.com.br/" target="_blank" rel="noopener noreferrer">
-                <Image
-                  src="/images/logo-conecta.png"
-                  width={160}
-                  height={80}
-                  alt="logoConecta"
-                  className="mb-3"
-                />
+                <Image src="/images/logo-conecta.png" width={160} height={80} alt="logoConecta" className="mb-3" />
               </a>
             </div>
             {children}
           </ScrollArea>
         </div>
       </div>
-      {/* <Footer isTall={verifyHeight} /> */}
+      <Footer isTall={verifyHeight} />
     </main>
   );
 }

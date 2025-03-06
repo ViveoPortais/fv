@@ -26,11 +26,11 @@ const HcpEngagementView = ({ data }: HcpEngagementViewProps) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex flex-col">
-          <Input value={data.healthProfessionalName || ""} placeholder="Nome do Contato" disabled={true} />
+          <Input value={data.contactName || ""} placeholder="Nome do Contato" disabled={true} />
         </div>
 
         <div className="flex flex-col">
-          <Input value={formatPhoneNumber(data.healthProfessionalPhoneNumber || "")} placeholder="Celular" disabled={true} />
+          <Input value={formatPhoneNumber(data.contactPhoneNumber || "")} placeholder="Celular" disabled={true} />
         </div>
       </div>
 
