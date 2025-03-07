@@ -98,7 +98,11 @@ export const fetchGetIncidentAudit = createAsyncThunk(
 const callTrackingSlice = createSlice({
   name: "callTracking",
   initialState,
-  reducers: {},
+  reducers: {
+    resetCalls: (state) => {
+      state.calls = [];
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchCalls.pending, (state) => {
@@ -168,5 +172,6 @@ export const selectLoading = (state: RootState) => state.callTracking.loading;
 export const selectStatusOptions = (state: RootState) => state.callTracking.statusOptions;
 export const selectMessageCount = (state: RootState) => state.callTracking.messageCount;
 export const selectIncidentAudit = (state: RootState) => state.callTracking.incidentAudit;
+export const { resetCalls } = callTrackingSlice.actions;
 
 export default callTrackingSlice.reducer;

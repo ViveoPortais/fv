@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import {
   fetchCalls,
   fetchStatusOptions,
+  resetCalls,
   selectCalls,
   selectLoading,
   selectStatusOptions,
@@ -27,6 +28,7 @@ export default function CallTracking() {
   const programCode = useSession().programCode;
   const bgColor = getBackgroundColor(useSession().programCode);
   const textColor = getTextColor(useSession().programCode);
+  const [isTableLoading, setIsTableLoading] = useState(true);
 
   const [filters, setFilters] = useState<Filters>({
     code: "",
@@ -45,8 +47,17 @@ export default function CallTracking() {
   }, [dispatch, programCode]);
 
   useEffect(() => {
+    dispatch(resetCalls());
     dispatch(fetchCalls({ filters, programCode }));
   }, [dispatch, programCode]);
+
+  useEffect(() => {
+    if (!isLoading && calls.length > 0) {
+      setIsTableLoading(false);
+    } else {
+      setIsTableLoading(true);
+    }
+  }, [calls, isLoading]);
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilters((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -54,7 +65,7 @@ export default function CallTracking() {
 
   return (
     <div className="p-4 space-y-4">
-      <LoadingOverlay isVisible={isLoading} />
+      <LoadingOverlay isVisible={isTableLoading} />
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Input name="code" placeholder="Código" value={filters.code} onChange={handleFilterChange} />
         <CustomSelect
@@ -66,10 +77,14 @@ export default function CallTracking() {
         <Input type="date" placeholder="De" name="startDate" value={filters.startDate} onChange={handleFilterChange} />
         <Input type="date" placeholder="Até" name="endDate" value={filters.endDate} onChange={handleFilterChange} />
       </div>
-      <Button disabled={isLoading} variant={"genericModalNo"} onClick={() => dispatch(fetchCalls({ filters, programCode }))}>
+      <Button
+        disabled={isLoading}
+        variant={"genericModalNo"}
+        onClick={() => dispatch(fetchCalls({ filters, programCode }))}
+      >
         Filtrar
       </Button>
-      <DataTable columns={columns} data={calls} isLoading={isLoading} bgColor={bgColor} textColor={textColor} />
+      <DataTable columns={columns} data={calls} isLoading={isTableLoading} bgColor={bgColor} textColor={textColor} />
     </div>
   );
 }
