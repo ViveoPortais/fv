@@ -232,7 +232,7 @@ export default function SignIn() {
         {isTokenSended && (
           <Button
             size={`lg`}
-            className={`w-full ${isLoading && "bg-zinc-500"}`}
+            className={`w-full bg-purple-900/75 ${isLoading && "bg-zinc-500"}`}
             type="button"
             disabled={isLoading}
             onClick={() => handleResendToken(watch())}

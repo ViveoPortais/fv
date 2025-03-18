@@ -5,8 +5,10 @@ import { setCode, setSelectedCallId, setStatusName } from "@/store/slices/callSl
 import { fetchApproveDisapprove, selectLoading } from "@/store/slices/callTrackingSlice";
 import { RequestStatusIncident } from "@/types/incident";
 import { ColumnDef } from "@tanstack/react-table";
+import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 import { FaEye, FaCheck, FaTimes, FaSpinner, FaStar } from "react-icons/fa";
+import { HiChevronDown, HiChevronUp } from "react-icons/hi";
 
 export type CallType = {
   id: string;
@@ -177,8 +179,31 @@ export const columns: ColumnDef<CallType>[] = [
   },
   {
     accessorKey: "createdOn",
-    header: "Data da Solicitação",
-    cell: ({ row }) => new Date(row.original.createdOn).toLocaleDateString(),
+    header: ({ column }) => {
+      const isSortedDesc = column.getIsSorted() === "desc";
+      const isSortedAsc = column.getIsSorted() === "asc";
+
+      return (
+        <button onClick={() => column.toggleSorting()} className="text-left flex items-center space-x-2 ml-4">
+          <span>Data da solicitação</span>
+          {isSortedAsc && <HiChevronUp />}
+          {isSortedDesc && <HiChevronDown />}
+        </button>
+      );
+    },
+    cell: ({ row }) => {
+      const date = row.original.createdOn;
+      return date ? dayjs(date).format("DD/MM/YYYY") : "";
+    },
+
+    enableSorting: true,
+    sortingFn: (rowA, rowB) => {
+      const dateA = new Date(rowA.original.createdOn).getTime();
+      const dateB = new Date(rowB.original.createdOn).getTime();
+
+      return dateA - dateB;
+    },
+    sortDescFirst: false,
   },
   {
     accessorKey: "deliveryDone",
