@@ -9,9 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 
 //Esquemas de validação
 export const forgetPasswordValidationSchema = z.object({
-  professionalType: z.string().min(1, { message: "Selecione uma profissão" }),
-  licenseNumber: z.string().min(1, { message: "Insira um CRM ou número de registro válido" }),
-  licenseState: z.string().min(1, { message: "Informe um estado" }),
+  email: z.string().email({ message: `Insira um e-mail válido` }),
   sendByEmail: z.boolean(),
   sendBySms: z.boolean(),
 }).refine(data => data.sendByEmail || data.sendBySms, {

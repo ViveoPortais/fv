@@ -38,7 +38,7 @@ const ContentCard = ({
   subtitleTwo,
   textemail,
   textphone,
-  buttonText,
+    buttonText,
   hideButton,
   subtitleThree,
   subtitleFour,
@@ -78,7 +78,7 @@ const ContentCard = ({
         } `}
     >
       <div className={`${isCustomBg && "scale-x-[-1]"} flex flex-col h-full`}>
-        <div className="text-white md:w-full ml-3 2xl:ml-5 mt-5 md:mt-8 xl:mt-4 text-3xl flex flex-col">
+        <div className="text-black md:w-full ml-3 2xl:ml-5 mt-5 md:mt-8 xl:mt-4 text-3xl flex flex-col">
           <span>{title}</span>
           <span className="text-sm mt-2 ml-1 opacity-95 w-3/4">{subtitle}</span>
           {showImages && (
@@ -142,14 +142,14 @@ const ContentCard = ({
           className={`ml-3 2xl:ml-5 my-5 flex justify-between items-end h-full`}
         >
           {!hideButton && (
-            <Button size="lg" className="bg-gray-300 hover:bg-gray-600" onClick={onButtonClick}>
+            <Button size="lg" className={`${bgColor}/75 hover:${bgColor}/75 text-black font-semibold`} onClick={onButtonClick}>
               {buttonText}
             </Button>
           )}
 
           {hasIcon && Icon && (
             <div className="flex items-center justify-end w-16 mr-8">
-              <Icon className="w-14 h-14 text-gray-300" />
+              <Icon className="w-14 h-14 text-gray-100" />
             </div>
           )}
         </div>

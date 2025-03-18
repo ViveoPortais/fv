@@ -121,7 +121,7 @@ const OpeningCalls = () => {
                 <Button
                   key={option.id}
                   size="lg"
-                  className={`w-full ${bgColor}`}
+                  className={`text-black font-medium w-full ${bgColor}`}
                   onClick={() => handleButtonClick(option)}
                   title={getToolTip(option.value)}
                 >

@@ -36,9 +36,9 @@
 
     --slate: 215,20.2%,65.1%;
 
-    --green-rare: #0aa454;
-    --purple-rare: #5b358c;
-    --yellow-rare: #f69c00;
+    --green-rare: #3E9B45BF;
+    --purple-rare: #5F2D8FBF;
+    --yellow-rare: #E49F24BF;
     --no-program: #858585;
   }
 
@@ -71,9 +71,9 @@
     --input: 215 27.9% 16.9%;
     --ring: 216 12.2% 83.9%;
 
-    --green-rare: #0aa454;
-    --purple-rare: #5b358c;
-    --yellow-rare: #f69c00;
+    --green-rare: #3E9B45BF;
+    --purple-rare: #5F2D8FBF;
+    --yellow-rare: #E49F24BF;
     --no-program: #858585;
   }
 }

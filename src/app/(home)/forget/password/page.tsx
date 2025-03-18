@@ -12,9 +12,7 @@ import { getOptionsProfessions } from "@/services/professions";
 import { forgetPasswordValidationSchema, forgetPasswordValidationProps } from "@/lib/utils";
 
 import { FormHeader } from "@/components/forgetpassword/FormHeader";
-import { ProfessionField } from "@/components/forgetpassword/ProfessionField"
 import { RegistrationField } from "@/components/forgetpassword/RegistrationField";
-import { LicenseStateField } from "@/components/forgetpassword/LicenseStateField";
 import { NotificationOptions } from "@/components/forgetpassword/NotificationOptions";
 import Link from "next/link";
 import { IStringMap } from "@/types";
@@ -23,7 +21,7 @@ export default function ForgetPassword() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [optionsProfessions, setOptionsProfessions] = useState<IStringMap[]>([]);
-  const [selectedNotificationMethod, setSelectedNotificationMethod] = useState<'email' | 'sms' | null>(null);
+  const [selectedNotificationMethod, setSelectedNotificationMethod] = useState<"email" | "sms" | null>(null);
   const [showMessageCheckbox, setShowMessageCheckbox] = useState(true);
 
   const {
@@ -36,8 +34,6 @@ export default function ForgetPassword() {
   } = useForm<forgetPasswordValidationProps>({
     resolver: zodResolver(forgetPasswordValidationSchema),
   });
-
-  const professionsSelected = watch("professionalType");
 
   async function handleForgetPassword(data: forgetPasswordValidationProps) {
     setIsLoading(true);
@@ -56,22 +52,14 @@ export default function ForgetPassword() {
     }
   }
 
-  const handleCrmChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, "");
-    setValue("licenseNumber", value);
-  };
-
   useEffect(() => {
     const createListProfessions = async () => {
       const options = await getOptionsProfessions();
       setOptionsProfessions(options);
-    }
+    };
 
     createListProfessions();
   }, []);
-
-  const selectedValues = optionsProfessions
-    .find(profession => profession.stringMapId == professionsSelected);
 
   return (
     <div className="flex flex-col gap-4 w-full max-w-4xl min-w-[300px] mx-auto items-center mt-5">
@@ -79,23 +67,9 @@ export default function ForgetPassword() {
         <FormHeader contentString="Esqueci minha senha" />
       </div>
 
-      <form
-        className="flex flex-col items-center gap-4 w-full h-full"
-        onSubmit={handleSubmit(handleForgetPassword)}
-      >
-        <div className={professionsSelected ? "w-full grid grid-cols-1 md:grid-cols-3 gap-3" : "w-full grid grid-cols-1"}>
-          <ProfessionField control={control} options={optionsProfessions} errors={errors} />
-          {professionsSelected && (
-            <>
-              <RegistrationField
-                register={register}
-                errors={errors}
-                handleCrmChange={handleCrmChange}
-                professionsSelected={selectedValues?.optionName}
-              />
-              <LicenseStateField control={control} errors={errors} />
-            </>
-          )}
+      <form className="flex flex-col items-center gap-4 w-full h-full" onSubmit={handleSubmit(handleForgetPassword)}>
+        <div className={"w-full grid grid-cols-1"}>
+          <RegistrationField register={register} errors={errors} />
         </div>
 
         <NotificationOptions
@@ -113,11 +87,7 @@ export default function ForgetPassword() {
           type="submit"
           disabled={isLoading}
         >
-          {isLoading ? (
-            <CgSpinner size={20} className="text-white animate-spin" />
-          ) : (
-            "Enviar"
-          )}
+          {isLoading ? <CgSpinner size={20} className="text-white animate-spin" /> : "Enviar"}
         </Button>
       </form>
 
