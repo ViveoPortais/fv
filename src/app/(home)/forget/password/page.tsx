@@ -83,7 +83,7 @@ export default function ForgetPassword() {
 
         <Button
           size="lg"
-          className={`w-full mt-4 ${isLoading ? "bg-zinc-500" : ""}`}
+          className={`w-full mt-4 bg-purple-900/75 ${isLoading ? "bg-zinc-500" : ""}`}
           type="submit"
           disabled={isLoading}
         >
