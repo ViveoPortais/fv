@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchChatMessages, sendMessage } from "@/store/slices/callChatSlice";
+import { downloadAttachmentChat, fetchChatMessages, sendMessage } from "@/store/slices/callChatSlice";
 import { Button } from "@/components/ui/button";
 import { Paperclip, Send } from "lucide-react";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import useSession from "@/hooks/useSession";
 import { LoadingOverlay } from "../custom/LoadingOverlay";
+import { downloadAttachment } from "@/services/chat";
 
 interface ChatCallProps {
   incidentId: string;
@@ -89,7 +90,16 @@ const ChatCall: React.FC<ChatCallProps> = ({ incidentId, programCode }) => {
                   className="max-w-[10rem] xs:max-w-[15rem] sm:max-w-[20rem] md:max-w-[30rem] lg:max-w-[40rem] xl:max-w-[50rem] overflow-y-auto mb-2"
                   style={{ wordWrap: "break-word" }}
                 >
-                  <p className="text-sm text-gray-700 whitespace-pre-wrap">{dialog.message}</p>
+                  {dialog.attachmentId ? (
+                    <span
+                      className="text-blue-600 hover:underline cursor-pointer"
+                      onClick={() => dispatch(downloadAttachmentChat({ incidentId: dialog.attachmentId, programCode }))}
+                    >
+                      {dialog.message}
+                    </span>
+                  ) : (
+                    <p className="text-sm text-gray-700 whitespace-pre-wrap">{dialog.message}</p>
+                  )}
                 </div>
                 <p className={`text-xs text-gray-500 text-right`}>
                   {new Date(dialog.date).toLocaleTimeString("pt-BR", {

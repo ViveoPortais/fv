@@ -19,3 +19,14 @@ export const postChat = async (data: PostChat) => {
   });
   return res.data;
 };
+
+export const downloadAttachment = async (incidentId: string, programCode: string) => {
+  const res = await api.get("/Annotation/download", {
+    params: {
+      id: incidentId,
+      programCode: programCode,
+    },
+    responseType: "blob",
+  });
+  return res;
+};

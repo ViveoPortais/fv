@@ -35,7 +35,7 @@ export function AlterPasswordModal() {
 
                 alterPasswordModal.openModal(false);
 
-                router.push("/dashboard/starts");
+                router.push("/dashboard/program");
             } else {
                 alterPasswordModal.openModal(false);
                 toast.warning(res.additionalMessage);
