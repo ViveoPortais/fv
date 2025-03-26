@@ -11,7 +11,7 @@ export default function IncidentReport() {
     return (
       <div className="h-full w-full">
         <div className="flex flex-col min-h-screen p-6">
-          <PowerBIDashboard reportId="31A60D76-AF77-4CD3-BDC8-8B244D4FF40A" groupId="9672ce0f-9625-461e-be9a-2b7b08aa48d9"/>
+          <PowerBIDashboard reportId="ce783073-1345-4732-9d31-4eb567a385be" groupId="87ad9545-1b34-41de-ba40-a8745891c93d"/>
         </div>
       </div>
     );
