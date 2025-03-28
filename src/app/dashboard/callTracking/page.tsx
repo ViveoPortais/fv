@@ -52,12 +52,12 @@ export default function CallTracking() {
   }, [dispatch, programCode]);
 
   useEffect(() => {
-    if (!isLoading && calls.length > 0) {
-      setIsTableLoading(false);
-    } else {
+    if (isLoading) {
       setIsTableLoading(true);
+    } else {
+      setIsTableLoading(false);
     }
-  }, [calls, isLoading]);
+  }, [isLoading]);
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilters((prev) => ({ ...prev, [e.target.name]: e.target.value }));
