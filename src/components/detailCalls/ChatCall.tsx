@@ -102,6 +102,11 @@ const ChatCall: React.FC<ChatCallProps> = ({ incidentId, programCode }) => {
                   )}
                 </div>
                 <p className={`text-xs text-gray-500 text-right`}>
+                  {new Date(dialog.date).toLocaleDateString("pt-BR", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                  })}{" "}
                   {new Date(dialog.date).toLocaleTimeString("pt-BR", {
                     hour: "2-digit",
                     minute: "2-digit",
